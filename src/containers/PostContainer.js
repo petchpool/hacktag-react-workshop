@@ -1,15 +1,13 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import { deletePost, getPost } from '../services/PostService'
+import { deletePost } from '../services/PostService'
 import { connect } from 'react-redux'
 
 class PostContainer extends Component {
 
   componentDidMount() {
-    const { savePosts } = this.props
-    getPost(res => {
-      savePosts(res)
-    })
+    const { requestPosts } = this.props
+    requestPosts()
   }
 
   _onDeletePost = (id) => {
@@ -58,8 +56,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    savePosts: (posts) =>
-      dispatch({ type: 'SAVE_POST', posts: posts, loading: false })
+    requestPosts: () => {
+      dispatch({ type: 'REQUEST_POSTS' })
+    }
   }
 }
 
